@@ -1,5 +1,7 @@
 package com.example.note.view
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,13 +32,16 @@ import androidx.navigation.NavController
 import com.example.note.R
 import com.example.note.navigation.Screen
 import com.example.note.viewModel.NoteViewModel
+import java.time.LocalDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeView(
     noteViewModel: NoteViewModel,
     navController: NavController
 ) {
+    val dataNote = LocalDate.now().toString()
     Scaffold(
        topBar = {
            TopAppBar(
@@ -66,7 +71,7 @@ fun HomeView(
                         },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .size(180.dp,60.dp),
+                            .size(180.dp,80.dp),
                         shape = RectangleShape
                     ) {
                         Text(
@@ -78,6 +83,10 @@ fun HomeView(
                             text = it.content,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(start = 7.dp, end = 7.dp)
+                        )
+                        Text(
+                            text = dataNote,
                             modifier = Modifier.padding(start = 7.dp, end = 7.dp)
                         )
                     }

@@ -1,5 +1,7 @@
 package com.example.note.viewModel
 
+import android.provider.ContactsContract
+import android.provider.ContactsContract.Contacts.Data
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -10,9 +12,10 @@ class NoteViewModel: ViewModel()  {
     val selectedIdNote = mutableStateOf<NoteModel?>(null)
     fun addNote(
         title: String,
-        content: String
+        content: String,
+        data: String
     ){
-        val newNote = NoteModel(notes.size+1,title,content)
+        val newNote = NoteModel(notes.size+1,title,content,data)
         notes.add(newNote)
     }
     fun selectedNote(noteId:Int){

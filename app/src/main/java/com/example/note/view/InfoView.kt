@@ -1,6 +1,8 @@
 package com.example.note.view
 
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,7 +39,9 @@ import androidx.navigation.NavController
 import com.example.note.R
 import com.example.note.navigation.Screen
 import com.example.note.viewModel.NoteViewModel
+import java.time.LocalDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InfoView(
@@ -47,6 +51,7 @@ fun InfoView(
     val select = noteViewModel.selectedIdNote.value
     val titleNote = remember { mutableStateOf(select?.title ?: "") }
     val contentNote = remember { mutableStateOf(select?.content ?: "") }
+    val dataNote = LocalDate.now().toString()
     val context = LocalContext.current
     Scaffold(
         modifier = Modifier.background(Color.Black),
@@ -92,7 +97,8 @@ fun InfoView(
                         }
                     ) {
                         Icon(
-                            painter = painterResource(R.drawable.hen_back_icon_icons_com_55445),
+                            painter = painterResource(R.drawable.trashcan_delete_remove_trash_icon_178327),
+                            tint = Color.Cyan,
                             contentDescription = null,
                             modifier = Modifier.size(30.dp)
                         )
@@ -111,6 +117,10 @@ fun InfoView(
                     .verticalScroll(rememberScrollState())
                     .imePadding()
             ) {
+                Text(
+                    modifier = Modifier.padding(start = 16.dp),
+                    text = dataNote
+                )
                 TextField(
                     modifier = Modifier.fillMaxSize(),
                     value = contentNote.value,
@@ -144,7 +154,7 @@ fun InfoView(
                             .show()
                     }
                     else {
-                        noteViewModel.addNote(titleNote.value, contentNote.value)
+                        noteViewModel.addNote(titleNote.value, contentNote.value,dataNote)
                         navController.navigate(route = Screen.NoteHome.route)
                     }
                 },
